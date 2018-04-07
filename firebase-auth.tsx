@@ -44,6 +44,10 @@ firebase.auth().onAuthStateChanged(function (_user) {
 
 const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
+
+export function authorize(id) { ui.start(`#${id}`, uiConfig) };
+
+
 export default class firebaseComponent extends Component {
   update = {
     '#signin': _ => {

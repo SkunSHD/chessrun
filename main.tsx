@@ -3,6 +3,7 @@ import home from './home';
 import signin, { user } from './firebase-auth';
 import about from './about';
 import contact from './contact';
+import authorize from './authorize';
 
 const app_id = 'my-app';
 const main_id = 'main';
@@ -10,9 +11,11 @@ const main_id = 'main';
 new home().mount(main_id);
 new about().mount(main_id);
 new contact().mount(main_id);
+new authorize().mount(main_id);
 new signin().mount();
 
 app.on('//', route => {
+  console.log('[route]: ', route)
   const menus = document.querySelectorAll('.navbar-nav li');
   for (let i = 0; i < menus.length; ++i) menus[i].classList.remove('active');
   const item = document.querySelector(`[href='${route}']`);
@@ -42,6 +45,7 @@ class AppComponent extends Component {
               <li className="active"><a href="#">Home</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
+              <li><a href="#authorize">Authorize</a></li>
               <li><a href="#signout">Sign Out</a></li>
             </ul>
           </div>
