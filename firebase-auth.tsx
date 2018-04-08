@@ -4,13 +4,14 @@ import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
 
 const config = {
-  apiKey: "AIzaSyAImbYY2eFb5TPcBlZn-iHaNhKtNJ8Seug",
-  authDomain: "apprun-demo.firebaseapp.com",
-  databaseURL: "https://apprun-demo.firebaseio.com",
-  projectId: "apprun-demo",
-  storageBucket: "apprun-demo.appspot.com",
-  messagingSenderId: "1024119839929"
+  apiKey: "AIzaSyCsaEXo297Mo1Js08CUQ9DzWSYqJDQBdRo",
+  authDomain: "cheessons.firebaseapp.com",
+  databaseURL: "https://cheessons.firebaseio.com",
+  projectId: "cheessons",
+  storageBucket: "cheessons.appspot.com",
+  messagingSenderId: "105788159539"
 };
+
 firebase.initializeApp(config);
 
 const uiConfig = {
@@ -32,26 +33,30 @@ export let user;
 
 firebase.auth().onAuthStateChanged(function (_user) {
   // console.log('firebase auth: ', _user, document.location.hash)
+  console.log('--> [onAuthStateChanged]')
   if (_user) {
+    console.log('--> [user]', _user)
     user = _user;
     app.run('#auth');
-    app.run('route', document.location.hash);
+    app.run('route', '#about');
   } else {
     user = null;
-    app.run('#signin');
+    app.run('#auth');
+    // app.run('#signin');
   }
-})
+});
 
 const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
-
-export function authorize(id) { ui.start(`#${id}`, uiConfig) };
+export function authorize(nodeId) {
+  uiConfig.signInSuccessUrl = document.location.href;
+  ui.start(nodeId, uiConfig);
+}
 
 
 export default class firebaseComponent extends Component {
   update = {
     '#signin': _ => {
-      uiConfig.signInSuccessUrl = document.location.href;
       ui.start('#my-app', uiConfig);
     },
     '#signout': _ => {

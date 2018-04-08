@@ -14,6 +14,7 @@ new contact().mount(main_id);
 new authorize().mount(main_id);
 new signin().mount();
 
+// global routing
 app.on('//', route => {
   console.log('[route]: ', route)
   const menus = document.querySelectorAll('.navbar-nav li');
@@ -27,7 +28,7 @@ class AppComponent extends Component {
   state = {}
 
   view = state => {
-    return user && <div className=''>
+    return <div className=''>
       <nav className="navbar navbar-default navbar-static-top">
         <div className="container">
           <div className="navbar-header">
@@ -45,8 +46,11 @@ class AppComponent extends Component {
               <li className="active"><a href="#">Home</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
-              <li><a href="#authorize">Authorize</a></li>
-              <li><a href="#signout">Sign Out</a></li>
+              { !!user ?
+                <li><a href="#signout">Sign Out</a></li>
+                :
+                <li><a href="#authorize">Authorize</a></li>
+              }
             </ul>
           </div>
         </div>

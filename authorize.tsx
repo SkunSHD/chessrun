@@ -10,15 +10,19 @@ export default class authorizeComponent extends Component {
   }
 
   view = (state) => {
+    console.log('--> [auth render]')
     return <div>
       <h1>{state.content}</h1>
       <div id="authorize-container"></div>
     </div>
   }
 
-  update = {
+  update = { 
     '#authorize': state => {
-      setTimeout(()=> authorize("authorize-container"), 1000);
+      if(!this.auth()) {
+        console.log('--> [update authorizeComponent] !this.auth(): true)')
+        setTimeout(()=> authorize("#authorize-container"));
+      }
       return state
     },
   }

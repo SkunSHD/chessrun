@@ -10,8 +10,8 @@ export default class aboutComponent extends Component {
   }
 
   view = state => {
-    return state.authorized && <div>
-      <h1>{state.content} - {user.displayName} </h1>
+    return <div>
+      <h1>{state.content} - { state.authorized ? user.displayName : '[anonymous]'} </h1>
     </div>
   }
 
