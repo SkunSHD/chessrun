@@ -1,4 +1,4 @@
-## https://github.com/yysun/apprun-firebase-authentication.git
+#Application on appRun
 
-* Use _npm start_ to start the dev server
-* Use _npm run build_ to build for production
+* Use npm start to start the dev server
+* Use npm run build to build for production
