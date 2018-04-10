@@ -32,32 +32,20 @@ const uiConfig = {
 export let user;
 
 firebase.auth().onAuthStateChanged(function (_user) {
-  // console.log('firebase auth: ', _user, document.location.hash)
-  console.log('--> [onAuthStateChanged]')
   if (_user) {
-    console.log('--> [user]', _user)
     user = _user;
-    app.run('#auth');
-    app.run('route', '#about');
   } else {
     user = null;
-    app.run('#auth');
-    // app.run('#signin');
   }
+  app.run('#auth');
 });
 
 const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
-export function authorize(nodeId) {
-  uiConfig.signInSuccessUrl = document.location.href;
-  ui.start(nodeId, uiConfig);
-}
-
-
 export default class firebaseComponent extends Component {
   update = {
-    '#signin': _ => {
-      ui.start('#my-app', uiConfig);
+    '#signin': (state, nodeId) => {
+        ui.start(`#${nodeId}`, uiConfig);
     },
     '#signout': _ => {
       firebase.auth().signOut();
