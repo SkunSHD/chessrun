@@ -1,5 +1,5 @@
 import app, {Component} from 'apprun';
-// import {db} from './firebase-auth'
+import {db} from './firebase-auth'
 
 export default class visitorsComponent extends Component {
     state = {
@@ -15,17 +15,16 @@ export default class visitorsComponent extends Component {
     }
 
     update = {
-        // '#visitors': async(state) => {
-        //     const querySnapshot = await db.collection("visitors").get();
-        //     let result = [];
-        //     querySnapshot.forEach(item => result.push(item.data()));
-        //
-        //     return {
-        //         ...state,
-        //         visitors: result
-        //     };
-        // }
-        '#visitors': state => state
+        '#visitors': async(state) => {
+            const querySnapshot = await db.collection("visitors").get();
+            let result = [];
+            querySnapshot.forEach(item => result.push(item.data()));
+
+            return {
+                ...state,
+                visitors: result
+            };
+        }
     }
 }
 
