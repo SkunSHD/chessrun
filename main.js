@@ -40,7 +40,7 @@ var AppComponent = (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.state = {};
         _this.view = function (state) {
-            return apprun_1.default.createElement("div", { className: '' },
+            return apprun_1.default.createElement("div", { className: 'container' },
                 apprun_1.default.createElement("nav", { className: "navbar navbar-default navbar-static-top" },
                     apprun_1.default.createElement("div", { className: "container" },
                         apprun_1.default.createElement("div", { className: "navbar-header" },

@@ -64,9 +64,13 @@ var visitorsComponent = (function (_super) {
             visitors: []
         };
         _this.view = function (state) {
-            return apprun_1.default.createElement("div", null,
+            if (state && state.then)
+                return null;
+            return apprun_1.default.createElement("div", { className: "row" },
                 apprun_1.default.createElement("h1", null, state.pageName),
-                state.visitors.map(function (visitor) { return apprun_1.default.createElement("p", null, visitor.name); }));
+                state.visitors.map(function (visitor) { return apprun_1.default.createElement("div", { style: { width: 400, border: '1px black solid' } },
+                    apprun_1.default.createElement("p", null, visitor.name),
+                    apprun_1.default.createElement("button", { onClick: function () { return console.log('%%---> 123'); } }, "Delete")); }));
         };
         _this.update = {
             '#visitors': function (state) { return __awaiter(_this, void 0, void 0, function () {
@@ -81,7 +85,10 @@ var visitorsComponent = (function (_super) {
                             return [2 /*return*/, __assign({}, state, { visitors: result })];
                     }
                 });
-            }); }
+            }); },
+            '#deleteVisitor': function (state, visitorId) {
+                console.log('%%---> state, visitorId', state, visitorId);
+            }
         };
         return _this;
     }
