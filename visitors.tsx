@@ -1,4 +1,4 @@
-import app, {Component} from 'apprun';
+import app, { Component } from 'apprun';
 import { db } from './firebase-auth'
 
 
@@ -9,15 +9,13 @@ export default class visitorsComponent extends Component {
     };
 
     view = (state) => {
-        if(state && state.then) return null;
-
+        if (state && state.then) return null;
         return <div className="row">
             <h1>{state.pageName}</h1>
-            { state.visitors.map((visitor)=> <div style={{width: 400, border: '1px black solid'}}>
-                <p>{ visitor.name }</p>
-                <button onClick={ ()=> console.log('%%---> 123')
-                }>Delete</button>
-            </div>) }
+            {state.visitors.map((visitor) => <div style={{width: 400, border: '1px black solid'}}>
+                <p>{visitor.name}</p>
+                <button onclick={(e) => app.run('#deleteVisitor', visitor.timestamp)}>Delete</button>
+            </div>)}
         </div>
     }
 
@@ -32,9 +30,17 @@ export default class visitorsComponent extends Component {
                 visitors: result
             };
         },
-        '#deleteVisitor': (state, visitorId)=> {
-            console.log('%%---> state, visitorId', state, visitorId)
+        '#deleteVisitor': (state, visitorId) => {
+            console.log('%%---> state, visitorId', state, visitorId);
+            return state;
         }
     }
+
+    // @on('#deleteVisitor') deleteVisitor = (state, visitorId) => {
+    //     console.log('%%---> state, visitorId', state, visitorId);
+    //
+    //     return state;
+    //
+    // }
 }
 
