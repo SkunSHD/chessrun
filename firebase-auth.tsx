@@ -3,6 +3,7 @@ import app, { Component } from 'apprun';
 import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
 
+
 const config = {
   apiKey: "AIzaSyCsaEXo297Mo1Js08CUQ9DzWSYqJDQBdRo",
   authDomain: "cheessons.firebaseapp.com",
@@ -13,6 +14,8 @@ const config = {
 };
 
 firebase.initializeApp(config);
+
+export const db = firebase.firestore();
 
 const uiConfig = {
   signInSuccessUrl: '#',
@@ -34,10 +37,13 @@ export let user;
 firebase.auth().onAuthStateChanged(function (_user) {
   if (_user) {
     user = _user;
+    app.run('#auth');
+    app.run('route', document.location.hash);
   } else {
     user = null;
+    app.run('#auth');
   }
-  app.run('#auth');
+
 });
 
 const ui = new firebaseui.auth.AuthUI(firebase.auth());

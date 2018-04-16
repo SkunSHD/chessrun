@@ -4,6 +4,7 @@ import signin, { user } from './firebase-auth';
 import about from './about';
 import contact from './contact';
 import authorize from './authorize';
+import visitors from './visitors';
 
 const app_id = 'my-app';
 const main_id = 'main';
@@ -12,6 +13,7 @@ new home().mount(main_id);
 new about().mount(main_id);
 new contact().mount(main_id);
 new authorize().mount(main_id);
+new visitors().mount(main_id);
 new signin().mount();
 
 // global routing
@@ -46,7 +48,8 @@ class AppComponent extends Component {
               <li className="active"><a href="#">Home</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
-              { !!user ?
+              { user && <li><a href="#visitors">Visitors</a></li> }
+              { user ?
                 <li><a href="#signout">Sign Out</a></li>
                 :
                 <li><a href="#authorize">Authorize</a></li>
