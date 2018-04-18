@@ -1,11 +1,8 @@
 import app, { Component } from 'apprun';
 
-import firebase from '@firebase/app';
-import '@firebase/auth';
-import '@firebase/firestore';
-
+import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
-
+console.log('firebase', firebase)
 
 const config = {
   apiKey: "AIzaSyCsaEXo297Mo1Js08CUQ9DzWSYqJDQBdRo",
