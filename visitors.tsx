@@ -17,15 +17,20 @@ export default class visitorsComponent extends Component {
                     <button type="button" className="btn btn-info">Visitors</button>
                     <button type="button" className="btn btn-secondary mt-1">Anonymous</button>
                     <button type="button" className="btn btn-danger mt-1">Deleted</button>
-                    <input className="form-control mt-4" type="search" placeholder="Search" aria-label="Search" />
+
+                    <form className="form-inline mt-4" onsubmit={e => console.log('--> [e]', e)}>
+                        <input className="form-control w-75" type="search" placeholder="Search" aria-label="Search" />
+                        <button className="btn btn-outline-success w-25" type="submit">&#9823;</button>
+                    </form>
                 </div>
             </div>
             <div className="col-9">
                 <h1>{state.pageName}</h1>
-                {state.visitors.map((visitor) => <div style={{width: 400, border: '1px black solid'}}>
+                { state.visitors.map((visitor) => <div style={{width: 400, border: '1px black solid'}}>
                     <p>{visitor.name}</p>
-                    <button onclick={(e) => app.run('#deleteVisitor', visitor.timestamp)}>Delete</button>
-                </div>)}
+                    <button className="btn btn-danger" onclick={(e) => app.run('#deleteVisitor', visitor.timestamp)}>Delete</button>
+                </div>)
+                }
             </div>
         </div>
     }
@@ -44,14 +49,12 @@ export default class visitorsComponent extends Component {
         '#deleteVisitor': (state, visitorId) => {
             console.log('%%---> state, visitorId', state, visitorId);
             return state;
+        },
+        '#filter': (state, e) => {
+            console.log('e', e)
+            alert(e.target.value)
+            return state;
         }
     }
-
-    // @on('#deleteVisitor') deleteVisitor = (state, visitorId) => {
-    //     console.log('%%---> state, visitorId', state, visitorId);
-    //
-    //     return state;
-    //
-    // }
 }
 
