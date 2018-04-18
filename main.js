@@ -40,32 +40,30 @@ var AppComponent = (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.state = {};
         _this.view = function (state) {
-            return apprun_1.default.createElement("div", { className: 'container' },
-                apprun_1.default.createElement("nav", { className: "navbar navbar-default navbar-static-top" },
-                    apprun_1.default.createElement("div", { className: "container" },
-                        apprun_1.default.createElement("div", { className: "navbar-header" },
-                            apprun_1.default.createElement("button", { type: "button", className: "navbar-toggle collapsed", "data-toggle": "collapse", "data-target": "#navbar", "aria-expanded": "false", "aria-controls": "navbar" },
-                                apprun_1.default.createElement("span", { className: "sr-only" }, "Toggle navigation"),
-                                apprun_1.default.createElement("span", { className: "icon-bar" }),
-                                apprun_1.default.createElement("span", { className: "icon-bar" }),
-                                apprun_1.default.createElement("span", { className: "icon-bar" })),
-                            apprun_1.default.createElement("a", { className: "navbar-brand", href: "#/" }, "Project name")),
-                        apprun_1.default.createElement("div", { id: "navbar", className: "collapse navbar-collapse" },
-                            apprun_1.default.createElement("ul", { className: "nav navbar-nav" },
-                                apprun_1.default.createElement("li", { className: "active" },
-                                    apprun_1.default.createElement("a", { href: "#" }, "Home")),
-                                apprun_1.default.createElement("li", null,
-                                    apprun_1.default.createElement("a", { href: "#about" }, "About")),
-                                apprun_1.default.createElement("li", null,
-                                    apprun_1.default.createElement("a", { href: "#contact" }, "Contact")),
-                                firebase_auth_1.user && apprun_1.default.createElement("li", null,
-                                    apprun_1.default.createElement("a", { href: "#visitors" }, "Visitors")),
-                                firebase_auth_1.user ?
-                                    apprun_1.default.createElement("li", null,
-                                        apprun_1.default.createElement("a", { href: "#signout" }, "Sign Out"))
-                                    :
-                                        apprun_1.default.createElement("li", null,
-                                            apprun_1.default.createElement("a", { href: "#authorize" }, "Authorize")))))),
+            return apprun_1.default.createElement("div", { className: "container" },
+                apprun_1.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light" },
+                    apprun_1.default.createElement("a", { className: "navbar-brand", href: "#" }, "Chess Lessons \u2655"),
+                    apprun_1.default.createElement("button", { className: "navbar-toggler", type: "button", "data-toggle": "collapse", "data-target": "#navbarNav", "aria-controls": "navbarNav", "aria-expanded": "false", "aria-label": "Toggle navigation" },
+                        apprun_1.default.createElement("span", { className: "navbar-toggler-icon" })),
+                    apprun_1.default.createElement("div", { className: "collapse navbar-collapse", id: "navbarNav" },
+                        apprun_1.default.createElement("ul", { className: "navbar-nav" },
+                            apprun_1.default.createElement("li", { className: "nav-item active" },
+                                apprun_1.default.createElement("a", { className: "nav-link", href: "#" },
+                                    "Home ",
+                                    apprun_1.default.createElement("span", { className: "sr-only" }, "(current)"))),
+                            apprun_1.default.createElement("li", { className: "nav-item" },
+                                apprun_1.default.createElement("a", { className: "nav-link", href: "#about" }, "About")),
+                            apprun_1.default.createElement("li", { className: "nav-item" },
+                                apprun_1.default.createElement("a", { className: "nav-link", href: "#contact" }, "Contact")),
+                            firebase_auth_1.user &&
+                                apprun_1.default.createElement("li", { className: "nav-item" },
+                                    apprun_1.default.createElement("a", { className: "nav-link", href: "#visitors" }, "Visitors")),
+                            firebase_auth_1.user ?
+                                apprun_1.default.createElement("li", { className: "nav-item" },
+                                    apprun_1.default.createElement("a", { className: "nav-link", href: "#signout" }, "Sign Out"))
+                                :
+                                    apprun_1.default.createElement("li", { className: "nav-item" },
+                                        apprun_1.default.createElement("a", { className: "nav-link", href: "#authorize" }, "Authorize"))))),
                 apprun_1.default.createElement("div", { className: "container", id: "main" }));
         };
         _this.update = {

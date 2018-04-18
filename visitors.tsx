@@ -1,15 +1,20 @@
 import app, { Component } from 'apprun';
 import { db } from './firebase-auth'
+import { toQueryString } from './fetch';
 
+function onSubmit(e) {
+    console.log('--> [e]', toQueryString(e.target))
+}
 
 export default class visitorsComponent extends Component {
     state = {
         pageName: 'visitors',
-        visitors: []
+        visitors: [],
+        search: ''
     };
 
     view = (state) => {
-        if (state && state.then) return null;
+        // if (state && state.then) return null;
         return <div className="row">
             <div className="col-3">
                 <h3>Filters:</h3>
@@ -18,8 +23,8 @@ export default class visitorsComponent extends Component {
                     <button type="button" className="btn btn-secondary mt-1">Anonymous</button>
                     <button type="button" className="btn btn-danger mt-1">Deleted</button>
 
-                    <form className="form-inline mt-4" onsubmit={e => console.log('--> [e]', e)}>
-                        <input className="form-control w-75" type="search" placeholder="Search" aria-label="Search" />
+                    <form className="form-inline mt-4" onsubmit={ onSubmit }>
+                        <input onChange={ console.log } className="form-control w-75" type="search" placeholder="Search" aria-label="Search" />
                         <button className="btn btn-outline-success w-25" type="submit">&#9823;</button>
                     </form>
                 </div>
@@ -37,7 +42,11 @@ export default class visitorsComponent extends Component {
 
     update = {
         '#visitors': async (state) => {
-            const querySnapshot = await db.collection("visitors").get();
+            const querySnapshot = state.visitors.length ?
+                state.visitors
+                :
+                await db.collection("visitors").get();
+
             let result = [];
             querySnapshot.forEach(item => result.push(item.data()));
 
@@ -46,14 +55,50 @@ export default class visitorsComponent extends Component {
                 visitors: result
             };
         },
+        '#change': (state, input)=> {
+            return {
+                ...state,
+                input: input
+            };
+        },
         '#deleteVisitor': (state, visitorId) => {
             console.log('%%---> state, visitorId', state, visitorId);
             return state;
         },
-        '#filter': (state, e) => {
+        '#search': (state, e) => {
             console.log('e', e)
             alert(e.target.value)
             return state;
+        }
+    }
+
+    updateState = async (state, type: '' | 'feed' | 'tag', page, tag?: string) => {
+        let visitorsList = state.visitors.length
+            ? { visitors: state.visitors }
+            : await db.collection("visitors").get();
+
+        // page = parseInt(page) || 1;
+        // tag = tag || state.tag;
+        // const limit = PAGE_SIZE;
+        // const offset = (page - 1) * PAGE_SIZE;
+        let feed;
+        switch (type) {
+            case 'feed':
+                feed = await articles.feed({ limit, offset });
+                break;
+            case 'search':
+                feed = await articles.search({ tag, limit, offset });
+                break;
+            default:
+                feed = await articles.search({ limit, offset });
+                break;
+        }
+        return {
+            ...state,
+            tags: tagList.tags,
+            type, page, tag,
+            articles: feed.articles,
+            max: feed.articlesCount
         }
     }
 }

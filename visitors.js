@@ -55,49 +55,108 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var apprun_1 = require("apprun");
 var firebase_auth_1 = require("./firebase-auth");
+var fetch_1 = require("./fetch");
+function onSubmit(e) {
+    console.log('--> [e]', fetch_1.toQueryString(e.target));
+}
 var visitorsComponent = (function (_super) {
     __extends(visitorsComponent, _super);
     function visitorsComponent() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.state = {
             pageName: 'visitors',
-            visitors: []
+            visitors: [],
+            search: ''
         };
         _this.view = function (state) {
-            if (state && state.then)
-                return null;
+            // if (state && state.then) return null;
             return apprun_1.default.createElement("div", { className: "row" },
-                apprun_1.default.createElement("h1", null, state.pageName),
-                state.visitors.map(function (visitor) { return apprun_1.default.createElement("div", { style: { width: 400, border: '1px black solid' } },
-                    apprun_1.default.createElement("p", null, visitor.name),
-                    apprun_1.default.createElement("button", { onclick: function (e) { return apprun_1.default.run('#deleteVisitor', visitor.timestamp); } }, "Delete")); }));
+                apprun_1.default.createElement("div", { className: "col-3" },
+                    apprun_1.default.createElement("h3", null, "Filters:"),
+                    apprun_1.default.createElement("div", { className: "btn-group-vertical", role: "group" },
+                        apprun_1.default.createElement("button", { type: "button", className: "btn btn-info" }, "Visitors"),
+                        apprun_1.default.createElement("button", { type: "button", className: "btn btn-secondary mt-1" }, "Anonymous"),
+                        apprun_1.default.createElement("button", { type: "button", className: "btn btn-danger mt-1" }, "Deleted"),
+                        apprun_1.default.createElement("form", { className: "form-inline mt-4", onsubmit: onSubmit },
+                            apprun_1.default.createElement("input", { onChange: console.log, className: "form-control w-75", type: "search", placeholder: "Search", "aria-label": "Search" }),
+                            apprun_1.default.createElement("button", { className: "btn btn-outline-success w-25", type: "submit" }, "\u265F")))),
+                apprun_1.default.createElement("div", { className: "col-9" },
+                    apprun_1.default.createElement("h1", null, state.pageName),
+                    state.visitors.map(function (visitor) { return apprun_1.default.createElement("div", { style: { width: 400, border: '1px black solid' } },
+                        apprun_1.default.createElement("p", null, visitor.name),
+                        apprun_1.default.createElement("button", { className: "btn btn-danger", onclick: function (e) { return apprun_1.default.run('#deleteVisitor', visitor.timestamp); } }, "Delete")); })));
         };
         _this.update = {
             '#visitors': function (state) { return __awaiter(_this, void 0, void 0, function () {
-                var querySnapshot, result;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4 /*yield*/, firebase_auth_1.db.collection("visitors").get()];
-                        case 1:
-                            querySnapshot = _a.sent();
+                var querySnapshot, _a, result;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            if (!state.visitors.length) return [3 /*break*/, 1];
+                            _a = state.visitors;
+                            return [3 /*break*/, 3];
+                        case 1: return [4 /*yield*/, firebase_auth_1.db.collection("visitors").get()];
+                        case 2:
+                            _a = _b.sent();
+                            _b.label = 3;
+                        case 3:
+                            querySnapshot = _a;
                             result = [];
                             querySnapshot.forEach(function (item) { return result.push(item.data()); });
                             return [2 /*return*/, __assign({}, state, { visitors: result })];
                     }
                 });
             }); },
+            '#change': function (state, input) {
+                return __assign({}, state, { input: input });
+            },
             '#deleteVisitor': function (state, visitorId) {
                 console.log('%%---> state, visitorId', state, visitorId);
                 return state;
+            },
+            '#search': function (state, e) {
+                console.log('e', e);
+                alert(e.target.value);
+                return state;
             }
         };
+        _this.updateState = function (state, type, page, tag) { return __awaiter(_this, void 0, void 0, function () {
+            var visitorsList, _a, feed, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        if (!state.visitors.length) return [3 /*break*/, 1];
+                        _a = { visitors: state.visitors };
+                        return [3 /*break*/, 3];
+                    case 1: return [4 /*yield*/, firebase_auth_1.db.collection("visitors").get()];
+                    case 2:
+                        _a = _c.sent();
+                        _c.label = 3;
+                    case 3:
+                        visitorsList = _a;
+                        _b = type;
+                        switch (_b) {
+                            case 'feed': return [3 /*break*/, 4];
+                            case 'search': return [3 /*break*/, 6];
+                        }
+                        return [3 /*break*/, 8];
+                    case 4: return [4 /*yield*/, articles.feed({ limit: limit, offset: offset })];
+                    case 5:
+                        feed = _c.sent();
+                        return [3 /*break*/, 10];
+                    case 6: return [4 /*yield*/, articles.search({ tag: tag, limit: limit, offset: offset })];
+                    case 7:
+                        feed = _c.sent();
+                        return [3 /*break*/, 10];
+                    case 8: return [4 /*yield*/, articles.search({ limit: limit, offset: offset })];
+                    case 9:
+                        feed = _c.sent();
+                        return [3 /*break*/, 10];
+                    case 10: return [2 /*return*/, __assign({}, state, { tags: tagList.tags, type: type, page: page, tag: tag, articles: feed.articles, max: feed.articlesCount })];
+                }
+            });
+        }); };
         return _this;
-        // @on('#deleteVisitor') deleteVisitor = (state, visitorId) => {
-        //     console.log('%%---> state, visitorId', state, visitorId);
-        //
-        //     return state;
-        //
-        // }
     }
     return visitorsComponent;
 }(apprun_1.Component));

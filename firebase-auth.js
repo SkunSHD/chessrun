@@ -11,9 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var apprun_1 = require("apprun");
-var app_1 = require("@firebase/app");
-require("@firebase/auth");
-require("@firebase/firestore");
+var firebase = require("firebase");
 var firebaseui = require("firebaseui");
 var config = {
     apiKey: "AIzaSyCsaEXo297Mo1Js08CUQ9DzWSYqJDQBdRo",
@@ -23,22 +21,22 @@ var config = {
     storageBucket: "cheessons.appspot.com",
     messagingSenderId: "105788159539"
 };
-app_1.default.initializeApp(config);
-exports.db = app_1.default.firestore();
+firebase.initializeApp(config);
+exports.db = firebase.firestore();
 var uiConfig = {
     signInSuccessUrl: '#',
     signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
-        app_1.default.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
         // firebase.auth.GithubAuthProvider.PROVIDER_ID,
-        app_1.default.auth.EmailAuthProvider.PROVIDER_ID,
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ]
     // Terms of service url.
     // tosUrl: '<your-tos-url>'
 };
-app_1.default.auth().onAuthStateChanged(function (_user) {
+firebase.auth().onAuthStateChanged(function (_user) {
     if (_user) {
         exports.user = _user;
         apprun_1.default.run('#auth');
@@ -49,7 +47,7 @@ app_1.default.auth().onAuthStateChanged(function (_user) {
         apprun_1.default.run('#auth');
     }
 });
-var ui = new firebaseui.auth.AuthUI(app_1.default.auth());
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
 var firebaseComponent = (function (_super) {
     __extends(firebaseComponent, _super);
     function firebaseComponent() {
@@ -59,7 +57,7 @@ var firebaseComponent = (function (_super) {
                 ui.start("#" + nodeId, uiConfig);
             },
             '#signout': function (_) {
-                app_1.default.auth().signOut();
+                firebase.auth().signOut();
                 document.location.replace(document.location.origin);
             },
         };
