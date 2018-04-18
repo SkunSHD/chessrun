@@ -2,7 +2,6 @@ import app, { Component } from 'apprun';
 
 import * as firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
-console.log('firebase', firebase)
 
 const config = {
   apiKey: "AIzaSyCsaEXo297Mo1Js08CUQ9DzWSYqJDQBdRo",

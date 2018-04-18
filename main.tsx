@@ -30,32 +30,38 @@ class AppComponent extends Component {
   state = {}
 
   view = state => {
-    return <div className='container'>
-      <nav className="navbar navbar-default navbar-static-top">
-        <div className="container">
-          <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
-            <a className="navbar-brand" href="#/">Project name</a>
-          </div>
-          <div id="navbar" className="collapse navbar-collapse">
-            <ul className="nav navbar-nav">
-              <li className="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-                { user && <li><a href="#visitors">Visitors</a></li> }
-                { user ?
-                    <li><a href="#signout">Sign Out</a></li>
-                    :
-                    <li><a href="#authorize">Authorize</a></li>
-                }
-            </ul>
-          </div>
+    return <div className="container">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="#">Chess Lessons</a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#about">About</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#contact">Contact</a>
+            </li>
+            { user &&
+              <li className="nav-item">
+                <a className="nav-link" href="#visitors">Visitors</a>
+              </li>
+            }
+            { user ?
+                <li className="nav-item">
+                  <a className="nav-link" href="#signout">Sign Out</a>
+                </li>
+                :
+                <li className="nav-item">
+                  <a className="nav-link" href="#authorize">Authorize</a>
+                </li>
+            }
+          </ul>
         </div>
       </nav>
       <div className="container" id="main"></div>
