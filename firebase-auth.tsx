@@ -1,6 +1,9 @@
 import app, { Component } from 'apprun';
 
-import * as firebase from 'firebase';
+import firebase from '@firebase/app';
+import '@firebase/auth';
+import '@firebase/firestore';
+
 import * as firebaseui from 'firebaseui';
 
 
@@ -25,9 +28,9 @@ const uiConfig = {
     // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
     // firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    // firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
     // firebase.auth.PhoneAuthProvider.PROVIDER_ID
-  ],
+  ]
   // Terms of service url.
   // tosUrl: '<your-tos-url>'
 };

@@ -10,7 +10,9 @@ module.exports = {
     extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
   },
   externals: {
-    'firebase': 'firebase',
+    // '@firebase/app': '@firebase/app',
+    // '@firebase/auth': '@firebase/auth',
+    // '@firebase/firestore': '@firebase/firestore',
     'firebaseui': 'firebaseui'
   },
   module: {

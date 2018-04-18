@@ -2,6 +2,10 @@
   "name": "apprun-firebase-authentication",
   "version": "0.1.0",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/SkunSHD/chessrun.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,9 +16,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apprun": "^1.4.0",
-    "firebase": "^4.1.3",
-    "firebaseui": "^2.2.1"
+    "@firebase/app": "^0.1.10",
+    "@firebase/auth": "^0.4.1",
+    "@firebase/firestore": "^0.3.7",
+    "apprun": "^1.12.0",
+    "firebaseui": "^2.7.0"
   },
   "devDependencies": {
     "ts-loader": "^2.2.2",
