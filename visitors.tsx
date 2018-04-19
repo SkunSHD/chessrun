@@ -1,9 +1,9 @@
 import app, { Component } from 'apprun';
 import { db } from './firebase-auth'
-import { toQueryString } from './fetch';
+import { serializeObject } from './fetch';
 
 function onSubmit(e) {
-    console.log('--> [e]', toQueryString(e.target))
+    console.log('--> [e]', serializeObject(e.target))
 }
 
 export default class visitorsComponent extends Component {
@@ -42,17 +42,18 @@ export default class visitorsComponent extends Component {
 
     update = {
         '#visitors': async (state) => {
-            const querySnapshot = state.visitors.length ?
-                state.visitors
-                :
-                await db.collection("visitors").get();
-
-            let result = [];
-            querySnapshot.forEach(item => result.push(item.data()));
+            const newState = await this.updateState(state, '');
+            // const querySnapshot = state.visitors.length ?
+            //     state.visitors
+            //     :
+            //     await db.collection("visitors").get();
+            //
+            // let result = [];
+            // querySnapshot.forEach(item => result.push(item.data()));
 
             return {
                 ...state,
-                visitors: result
+                ...newState
             };
         },
         '#change': (state, input)=> {
@@ -72,34 +73,32 @@ export default class visitorsComponent extends Component {
         }
     }
 
-    updateState = async (state, type: '' | 'feed' | 'tag', page, tag?: string) => {
-        let visitorsList = state.visitors.length
+    updateState = async (state, type: '' | 'feed' | 'search') => {
+        let visitorsColl = state.visitors.length
             ? { visitors: state.visitors }
             : await db.collection("visitors").get();
 
-        // page = parseInt(page) || 1;
-        // tag = tag || state.tag;
-        // const limit = PAGE_SIZE;
-        // const offset = (page - 1) * PAGE_SIZE;
-        let feed;
-        switch (type) {
-            case 'feed':
-                feed = await articles.feed({ limit, offset });
-                break;
-            case 'search':
-                feed = await articles.search({ tag, limit, offset });
-                break;
-            default:
-                feed = await articles.search({ limit, offset });
-                break;
+        console.log('visitorsColl', visitorsColl)
+
+        if(visitorsColl.docs.length) {
+            visitorsColl = visitorsColl.forEach(item => result.push(item.data()));
         }
+
         return {
             ...state,
-            tags: tagList.tags,
-            type, page, tag,
-            articles: feed.articles,
-            max: feed.articlesCount
-        }
+            visitorsColl
+        };
+
+        // let feed;
+        // switch (type) {
+        //     case 'feed':
+        //         feed = await articles.feed({ limit, offset });
+        //         break;
+        //     case 'search':
+        //         feed = await articles.search({ tag, limit, offset });
+        //         break;
+        // }
+
     }
 }
 

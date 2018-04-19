@@ -1,57 +1,57 @@
-declare var defaultBasePath;
+// declare var defaultBasePath;
 
-let access_token: string = window && window.localStorage && window.localStorage.getItem('jwt') || '';
-export function getToken() {
-  return access_token;
-}
-
-export function setToken(token: string) {
-  access_token = token;
-  if (!window.localStorage) return;  
-  if(token)
-    window.localStorage.setItem('jwt', token);
-  else
-    window.localStorage.removeItem('jwt');
-}
-
-export async function fetchAsync(method: 'GET' | 'POST' | 'DELETE' | 'PUT', url: string, body?: any) {
-  const headers = access_token ? { 'Authorization': `Token ${access_token}` } : {}
-  headers['Content-Type'] = 'application/json; charset=utf-8';
-  const response = await window['fetch'](`${defaultBasePath}${url}`, {
-    method,
-    headers,
-    body: body && JSON.stringify(body)
-  });
-  // server might return string instead of json to cause error at this line
-  const result = await response.json();
-  if (!response.ok) throw result;
-  return result;
-}
-
-export function get<T>(url: string): Promise<T> {
-  return fetchAsync('GET', url);
-}
-
-export function post<T>(url: string, body?: any): Promise<T> {
-  return fetchAsync('POST', url, body);
-}
-
-export function del(url: string) {
-  return fetchAsync('DELETE', url);
-}
-
-export function put(url: string, body?: any) {
-  return fetchAsync('PUT', url, body);
-}
-export function toQueryString(obj) {
-  const parts = [];
-  for (var i in obj) {
-    if (obj.hasOwnProperty(i)) {
-      parts.push(encodeURIComponent(i) + "=" + encodeURIComponent(obj[i]));
-    }
-  }
-  return parts.join("&");
-}
+// let access_token: string = window && window.localStorage && window.localStorage.getItem('jwt') || '';
+// export function getToken() {
+//   return access_token;
+// }
+//
+// export function setToken(token: string) {
+//   access_token = token;
+//   if (!window.localStorage) return;
+//   if(token)
+//     window.localStorage.setItem('jwt', token);
+//   else
+//     window.localStorage.removeItem('jwt');
+// }
+//
+// export async function fetchAsync(method: 'GET' | 'POST' | 'DELETE' | 'PUT', url: string, body?: any) {
+//   const headers = access_token ? { 'Authorization': `Token ${access_token}` } : {}
+//   headers['Content-Type'] = 'application/json; charset=utf-8';
+//   const response = await window['fetch'](`${defaultBasePath}${url}`, {
+//     method,
+//     headers,
+//     body: body && JSON.stringify(body)
+//   });
+//   // server might return string instead of json to cause error at this line
+//   const result = await response.json();
+//   if (!response.ok) throw result;
+//   return result;
+// }
+//
+// export function get<T>(url: string): Promise<T> {
+//   return fetchAsync('GET', url);
+// }
+//
+// export function post<T>(url: string, body?: any): Promise<T> {
+//   return fetchAsync('POST', url, body);
+// }
+//
+// export function del(url: string) {
+//   return fetchAsync('DELETE', url);
+// }
+//
+// export function put(url: string, body?: any) {
+//   return fetchAsync('PUT', url, body);
+// }
+// export function toQueryString(obj) {
+//   const parts = [];
+//   for (var i in obj) {
+//     if (obj.hasOwnProperty(i)) {
+//       parts.push(encodeURIComponent(i) + "=" + encodeURIComponent(obj[i]));
+//     }
+//   }
+//   return parts.join("&");
+// }
 
 export function serializeObject<T>(form) {
   let obj = {};
